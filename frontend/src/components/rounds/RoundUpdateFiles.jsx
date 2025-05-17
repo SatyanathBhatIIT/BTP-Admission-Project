@@ -75,7 +75,14 @@ function RoundUpdateFiles(props) {
         .then((res) => {
           setColumnNames(res.data.result);
           setIsLoading(false);
-          const valCol1 = ["CID", "Coap Reg ID"] // probable values of column1
+          let valCol1;
+          // check for filename
+          if (props.fileName === "ConsolidatedFile") {
+            valCol1 = ["CID", "Coap Reg ID", "COAP Reg Id"] // probable values of column1
+          }
+          else {
+            valCol1 = ["MTech Application No", "M.Tech Application No", "M.Tech Application No."] // probable values of column1
+          }
           // Check if valcol1 is present in columnNames and set it as default in column1 if found
           const defaultColumn1 = valCol1.find((val) =>
             res.data.result.some((col) => col.includes(val))
@@ -86,7 +93,7 @@ function RoundUpdateFiles(props) {
 
           if (props.fileName === "IITGOfferedButNotInterested") {
             // Check if valcol2 is present in columnNames and set it as default in column1 if found
-            const valCol2 = ['OtherInstt', 'Other Institute Decision'] // probable values of column2
+            const valCol2 = ['OtherInstt', 'Other Institute Decision','Other Institution Decision'] // probable values of column2
             const defaultColumn2 = valCol2.find((val) =>
               res.data.result.some((col) => col.includes(val))
             );
@@ -120,7 +127,7 @@ function RoundUpdateFiles(props) {
 
     setIsLoading(true);
     if (!coap || !candidateDecision || coap === "" || candidateDecision === "") {
-      setSnackbarMessage("Please ensure both COAP Reg Id and Candidate Decision are selected.");
+      setSnackbarMessage("Please ensure all columns are matched/selected.");
       setSnackbarSeverity("error");
       setSnackbarOpen(true);
       setIsLoading(false);
@@ -293,7 +300,11 @@ function RoundUpdateFiles(props) {
               <Grid item xs={12} sm={6} container justifyContent="center">
                 <TextField
                   select
-                  label="COAP Reg Id"
+                  label={
+                    props.fileName === "ConsolidatedFile"
+                      ? "COAP Reg ID"
+                      : "MTech Application No"
+                  }
                   value={coap}
                   onChange={(e) => setCoap(e.target.value)}
                   fullWidth
