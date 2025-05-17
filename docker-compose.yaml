@@ -16,7 +16,7 @@ services:
       - ADMIN_PASSWORD=admin@123
       - userFilePath=files
     ports:
-      - 3306:3306
+      - 1250:3306
     volumes: 
       - db-config:/etc/mysql
       - db-data:/var/lib/mysql
@@ -52,7 +52,7 @@ services:
       mysqldb:
         condition: service_healthy
     ports:
-      - 4444:4444
+      - 1500:4444
     volumes: 
       - ./backend-files:/usr/src/app/files
     stdin_open: true
@@ -68,7 +68,7 @@ services:
     build: ./frontend
     image: frontend
     ports:
-      - 80:8004
+      - 1750:8004
     stdin_open: true
     restart: always
 
