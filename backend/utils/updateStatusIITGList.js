@@ -7,21 +7,21 @@ async function updateDecision(
   con,
   applicant,
   round,
-  coapIdColumnName,
+  appNoColumnName,
   candidateDecisonColumnName,
   branch
 ) {
-  currCOAP = applicant[coapIdColumnName];
+  currAppNo = applicant[appNoColumnName];
   currDecision = applicant[candidateDecisonColumnName];
   // console.log("Current Decision:", currDecision);
-  // console.log("Current COAP:", currCOAP);
-  // console.log(currCOAP, currDecision);
+  // console.log("Current AppNo:", currAppNo);
+  // console.log(currAppNo, currDecision);
   try {
     // Check previous status
     var [checkPreviousStatus] = await con.query(
       `SELECT OfferedRound, RetainRound, RejectOrAcceptRound FROM applicationstatus WHERE 
-        COAP = ? AND branch = ?;`,
-      [currCOAP, branch]
+        AppNo = ? AND branch = ?;`,
+      [currAppNo, branch]
     );
     // console.log("Previous status:", checkPreviousStatus);
     bool_previousRetain = checkPreviousStatus[0].RetainRound != ""; // Check if previously retained
@@ -34,8 +34,8 @@ async function updateDecision(
           var [updatedStatus] = await con.query(
             `UPDATE applicationstatus
                         SET Accepted = 'N', RejectOrAcceptRound = ?
-                        WHERE COAP = ? AND branch = ?;`,
-            [round, currCOAP, branch]
+                        WHERE AppNo = ? AND branch = ?;`,
+            [round, currAppNo, branch]
           );
         } catch (error) {
           throw error;
@@ -48,8 +48,8 @@ async function updateDecision(
           var [updatedStatus] = await con.query(
             `UPDATE applicationstatus
                         SET Accepted = 'R', retainRound = ?
-                        WHERE COAP = ? AND branch = ?;`,
-            [round, currCOAP, branch]
+                        WHERE AppNo = ? AND branch = ?;`,
+            [round, currAppNo, branch]
           );
         } catch (error) {
           throw error;
@@ -62,8 +62,8 @@ async function updateDecision(
           var [updatedStatus] = await con.query(
             `UPDATE applicationstatus
                         SET Accepted = 'Y', RejectOrAcceptRound = ?
-                        WHERE COAP = ? AND branch = ?;`,
-            [round, currCOAP, branch]
+                        WHERE AppNo = ? AND branch = ?;`,
+            [round, currAppNo, branch]
           );
         } catch (error) {
           throw error;
@@ -73,14 +73,14 @@ async function updateDecision(
   } catch (error) {
     throw error;
   }
-  // console.log(`Updated candidate Decision ${currCOAP}`);
+  // console.log(`Updated candidate Decision ${currAppNo}`);
 }
 
 async function updateStatusIITGList(
   databaseName,
   filePath,
   round,
-  coapIdColumnName,
+  appNoColumnName,
   candidateDecisonColumnName,
   branch
 ) {
@@ -106,13 +106,13 @@ async function updateStatusIITGList(
       //   branch
       // );
       // console.log(
-      //   "aur ye bhi dekhlo applicant[coapIdColumnName]: ",
-      //   applicant[coapIdColumnName]
+      //   "aur ye bhi dekhlo applicant[appNoColumnName]: ",
+      //   applicant[appNoColumnName]
       // );
       var [isCS] = await con.query(
         `SELECT COUNT(*) AS count FROM applicationstatus WHERE 
-            COAP = ? AND branch = ?;`,
-        [applicant[coapIdColumnName], branch]
+            AppNo = ? AND branch = ?;`,
+        [applicant[appNoColumnName], branch]
       );
       if (isCS[0].count == 1) {
         try {
@@ -120,7 +120,7 @@ async function updateStatusIITGList(
             con,
             applicant,
             round,
-            coapIdColumnName,
+            appNoColumnName,
             candidateDecisonColumnName,
             branch
           );

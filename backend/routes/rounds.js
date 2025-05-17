@@ -283,7 +283,7 @@ router.post(
     let x = form.parse(req, async function (err, fields, files) {
       var oldpath = files.file.filepath;
       var candidateDecisonColumnName = fields.candidateDecision;
-      var coapIdColumnName = fields.coap;
+      var idColumnName = fields.coap;
       // console.log(fields);
       // console.log("idcoap",coapIdColumnName);
       // console.log("decision",candidateDecisonColumnName);
@@ -301,7 +301,7 @@ router.post(
               process.env.MYSQL_DATABASE,
               newpath,
               roundNumber,
-              coapIdColumnName,
+              idColumnName,
               candidateDecisonColumnName,
               req.user.branch
             );
@@ -310,7 +310,7 @@ router.post(
               process.env.MYSQL_DATABASE,
               newpath,
               roundNumber,
-              coapIdColumnName,
+              idColumnName,
               candidateDecisonColumnName,
               req.user.branch
             );
@@ -319,7 +319,7 @@ router.post(
               process.env.MYSQL_DATABASE,
               newpath,
               roundNumber,
-              coapIdColumnName,
+              idColumnName,
               candidateDecisonColumnName,
               req.user.branch
             );

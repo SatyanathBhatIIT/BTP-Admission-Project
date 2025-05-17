@@ -5,31 +5,32 @@ const connection = require("../config/dbConfig");
 
 async function updateDecision(
   con,
-  applicant,
+  applicant,  
   round,
   coapIdColumnName,
   candidateDecisonColumnName,
+  currAppNo,
   branch
 ) {
   const currCOAP = applicant[coapIdColumnName];
   const currDecision = applicant[candidateDecisonColumnName];
   // console.log(currCOAP, currDecision);
   try {
-    const query = `SELECT OfferedRound, RetainRound, RejectOrAcceptRound FROM applicationstatus WHERE COAP = ? AND branch = ?;`;
-    // console.log("Query:", query, "Parameters:", [currCOAP, branch]);
+    const query = `SELECT OfferedRound, RetainRound, RejectOrAcceptRound FROM applicationstatus WHERE COAP = ? AND branch = ?`;
+    // console.log("Query:", query, "Parameters:", [currAppNo, branch]);
     const [checkPreviousStatus] = await con.query(query, [currCOAP, branch]);
-    // console.log("COAP ID:", currCOAP);
+    // console.log("COAP ID:", currAppNo);
     // console.log("Query result:", checkPreviousStatus);
     if (checkPreviousStatus.length === 0) {
       try {
-        const insertQuery = `INSERT INTO applicationstatus (COAP, Offered, Accepted, RejectOrAcceptRound, branch) VALUES (?, '', 'E', ?, ?)`;
+        const insertQuery = `INSERT INTO applicationstatus (COAP, Offered, Accepted, RejectOrAcceptRound,AppNo, branch) VALUES (?, '', 'E', ?,?, ?)`;
         // console.log("Insert Query:", insertQuery, "Parameters:", [
         //   currCOAP,
         //   round,
         //   branch,
         // ]);
         // console.log(currCOAP,"inserted")
-        await con.query(insertQuery, [currCOAP, round, branch]);
+        await con.query(insertQuery, [currCOAP, round, currAppNo, branch]);
       } catch (error) {
         throw error;
       }
@@ -81,7 +82,7 @@ async function updateStatusConsolidatedFile(
     try {
       // console.log("branch1kanishkkkk: ", branch);
       // console.log("branch1kanishkkkk2: ", applicant[coapIdColumnName]);
-      const query = `SELECT COUNT(*) AS count FROM mtechappl WHERE COAP = ? AND branch = ?;`;
+      const query = `SELECT AppNo FROM mtechappl WHERE COAP = ? AND branch = ?;`;
       // console.log("Query:", query, "Parameters:", [
       //   applicant[coapIdColumnName],
       //   branch,
@@ -95,13 +96,14 @@ async function updateStatusConsolidatedFile(
       //   // console.log("Query result mahan:", isCS);
       // }
 
-      if (isCS[0].count === 1) {
+      if (isCS.length === 1) {
         await updateDecision(
           con,
           applicant,
           round,
           coapIdColumnName,
           candidateDecisonColumnName,
+          isCS[0].AppNo,
           branch
         );
       }

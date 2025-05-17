@@ -14,7 +14,8 @@ async function shortListGeneralCandidates(con, limit, round, branch) {
     Offered, 
     Accepted,
     OfferCat,
-    OfferedRound
+    OfferedRound,
+    ${mtechapplTable}.AppNo
     FROM ${mtechapplTable}
     LEFT JOIN ${applicationstatusTable}
     ON ${mtechapplTable}.COAP = ${applicationstatusTable}.COAP 
@@ -57,6 +58,7 @@ async function shortListGeneralCandidates(con, limit, round, branch) {
           "",
           "",
           "GEN_FandM",
+          candidate.AppNo,
           branch,
         ]);
         // console.log(`Shortlisted ${candidate.COAP} in GEN_FandM category`);
@@ -68,7 +70,7 @@ async function shortListGeneralCandidates(con, limit, round, branch) {
       await insertManyIntoTable(
         con,
         "applicationstatus",
-        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,branch)",
+        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,AppNo,branch)",
         valuesToBeInserted
       );
     }
@@ -92,7 +94,8 @@ async function shortListGeneralFemaleCandidates(con, limit, round, branch) {
     Offered, 
     Accepted,
     OfferCat,
-    OfferedRound
+    OfferedRound,
+    ${mtechapplTable}.AppNo
     FROM ${mtechapplTable}
     LEFT JOIN ${applicationstatusTable}
     ON ${mtechapplTable}.COAP = ${applicationstatusTable}.COAP 
@@ -132,6 +135,7 @@ async function shortListGeneralFemaleCandidates(con, limit, round, branch) {
           "",
           "",
           "GEN_Female",
+          candidate.AppNo,
           branch,
         ]);
         // console.log(`Shortlisted ${candidate.COAP} in GEN_Female category`);
@@ -143,7 +147,7 @@ async function shortListGeneralFemaleCandidates(con, limit, round, branch) {
       await insertManyIntoTable(
         con,
         "applicationstatus",
-        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,branch)",
+        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,AppNo,branch)",
         valuesToBeInserted
       );
     }

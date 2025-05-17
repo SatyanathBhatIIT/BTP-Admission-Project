@@ -24,7 +24,8 @@ async function shortListReservedCandidates(
     queryString = `SELECT ${mtechapplTable}.COAP, Gender, Category, MaxGateScore,
             Offered, 
             Accepted,
-            OfferedRound
+            OfferedRound,
+            ${mtechapplTable}.AppNo
             FROM ${mtechapplTable}
             LEFT JOIN ${applicationstatusTable}
             ON ${mtechapplTable}.COAP = ${applicationstatusTable}.COAP 
@@ -36,7 +37,8 @@ async function shortListReservedCandidates(
     queryString = `SELECT ${mtechapplTable}.COAP, Gender, Category, MaxGateScore,
             Offered, 
             Accepted,
-            OfferedRound
+            OfferedRound,
+            ${mtechapplTable}.AppNo
             FROM ${mtechapplTable}
             LEFT JOIN ${applicationstatusTable}
             ON ${mtechapplTable}.COAP = ${applicationstatusTable}.COAP 
@@ -64,6 +66,7 @@ async function shortListReservedCandidates(
         "",
         "",
         currCategory,
+        candidate.AppNo,
         branch, // Include branch directly in the values
       ]);
       // console.log(`Shortlisted ${candidate.COAP} in ${currCategory} category`);
@@ -73,7 +76,7 @@ async function shortListReservedCandidates(
       var x = await insertManyIntoTable(
         con,
         applicationstatusTable,
-        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,branch)",
+        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,AppNo,branch)",
         valuesToBeInserted
       );
     }

@@ -8,17 +8,17 @@ async function updateDecision(
   con,
   applicant,
   round,
-  coapIdColumnName,
+  appNoColumnName,
   candidateDecisonColumnName,
   branch
 ) {
-  currCOAP = applicant[coapIdColumnName];
+  currAppNo = applicant[appNoColumnName];
   currDecision = applicant[candidateDecisonColumnName];
-  // console.log(currCOAP, currDecision);
+  // console.log(currAppNo, currDecision);
   try {
     var [checkPreviousStatus] =
       await con.query(`SELECT OfferedRound, RetainRound, RejectOrAcceptRound FROM applicationstatus WHERE 
-        COAP = '${currCOAP}' AND branch = '${branch}';`);
+        AppNo = '${currAppNo}' AND branch = '${branch}';`);
     bool_previousRetain = checkPreviousStatus[0].RetainRound != "";
     bool_previousRejectOrAccept =
       checkPreviousStatus[0].RejectOrAcceptRound != "";
@@ -26,7 +26,7 @@ async function updateDecision(
       try {
         var [updatedStatus] = await con.query(`UPDATE applicationstatus
                     SET Accepted = 'E', RejectOrAcceptRound = '${round}'
-                    WHERE COAP = '${currCOAP}' AND branch = '${branch}';`);
+                    WHERE AppNo = '${currAppNo}' AND branch = '${branch}';`);
       } catch (error) {
         throw error;
       }
@@ -34,14 +34,14 @@ async function updateDecision(
   } catch (error) {
     throw error;
   }
-  // console.log(`updated candidate Desion ${currCOAP}`);
+  // console.log(`updated candidate Desion ${currAppNo}`);
 }
 
 async function updateStatusIITGNotInterested(
   databaseName,
   filePath,
   round,
-  coapIdColumnName,
+  appNoColumnName,
   candidateDecisonColumnName,
   branch
 ) {
@@ -64,14 +64,14 @@ async function updateStatusIITGNotInterested(
     try {
       var [isCS] =
         await con.query(`SELECT COUNT(*) AS count FROM applicationstatus WHERE 
-            COAP = '${applicant[coapIdColumnName]}' AND branch = '${branch}';`);
+            AppNo = '${applicant[appNoColumnName]}' AND branch = '${branch}';`);
       if (isCS[0].count == 1) {
         try {
           var x = await updateDecision(
             con,
             applicant,
             round,
-            coapIdColumnName,
+            appNoColumnName,
             candidateDecisonColumnName,
             branch
           );

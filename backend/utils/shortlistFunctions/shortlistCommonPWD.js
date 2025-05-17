@@ -6,7 +6,7 @@ async function updateCandidateStatus(con, candidate, offerCat, round, branch) {
   //updating the shortlisted candidates status in the applicationstatus table.
   try {
     let valuesToBeInserted = [
-      [candidate.COAP, "Y", "", round, "", "", offerCat, "Y", branch],
+      [candidate.COAP, "Y", "", round, "", "", offerCat, "Y", candidate.AppNo, branch],
     ];
     /*
             updating 
@@ -20,12 +20,12 @@ async function updateCandidateStatus(con, candidate, offerCat, round, branch) {
       await insertManyIntoTable(
         con,
         "applicationstatus",
-        "(COAP, Offered, Accepted, OfferedRound, RetainRound, RejectOrAcceptRound, OfferCat, IsOfferPwd, branch)",
+        "(COAP, Offered, Accepted, OfferedRound, RetainRound, RejectOrAcceptRound, OfferCat, IsOfferPwd, AppNo, branch)",
         valuesToBeInserted
       );
-      // console.log(
-      //   `Seat offered to ${candidate.COAP} in ${offerCat} category (COMMON_PWD)`
-      // );
+      console.log(
+        `Seat offered to ${candidate.COAP} in ${offerCat} category (COMMON_PWD)`
+      );
     }
   } catch (error) {
     throw error;
@@ -50,7 +50,8 @@ async function shortlistCommonPWDCandidates(con, limit, round, branch) {
     queryString = `SELECT mtechappl.COAP, Gender, Category, MaxGateScore, EWS, PWD,
         Offered, 
         Accepted,
-        OfferedRound
+        OfferedRound,
+        mtechappl.AppNo
         FROM mtechappl
         LEFT JOIN applicationstatus
         ON mtechappl.COAP = applicationstatus.COAP 

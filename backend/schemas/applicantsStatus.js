@@ -10,7 +10,8 @@ const applicantsStatusSchema = (branch) => `
         RejectOrAcceptRound text,
         ManualUpdate text,
         branch VARCHAR(255) DEFAULT '${branch}',
-        FOREIGN KEY (COAP) REFERENCES mtechappl (COAP)
+        AppNo VARCHAR(200) NOT NULL UNIQUE,
+        FOREIGN KEY (AppNo) REFERENCES mtechappl (AppNo)
     )
 `;
 

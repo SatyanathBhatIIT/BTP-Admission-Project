@@ -46,9 +46,9 @@ const prevprevYear = currYear - 2;
 // )
 // `;
 var applicantsSchema = `(
-  COAP VARCHAR(200) PRIMARY KEY,
-  AppNo VARCHAR(200) NOT NULL UNIQUE, 
-  Email VARCHAR(500) NOT NULL UNIQUE,
+  COAP VARCHAR(200) NOT NULL,
+  AppNo VARCHAR(200) PRIMARY KEY, 
+  Email VARCHAR(500) NOT NULL,
   FullName text NOT NULL,
   MaxGateScore float(24) NOT NULL,
   Pwd text NOT NULL,

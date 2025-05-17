@@ -12,7 +12,8 @@ async function shortListEWSCandidates(con, limit, round, branch) {
   const queryString = `SELECT mtechappl.COAP, Gender, Category, MaxGateScore,
     Offered, 
     Accepted,
-    OfferedRound
+    OfferedRound,
+    mtechappl.AppNo
     FROM mtechappl
     LEFT JOIN applicationstatus
     ON mtechappl.COAP = applicationstatus.COAP 
@@ -41,6 +42,7 @@ async function shortListEWSCandidates(con, limit, round, branch) {
         "",
         "",
         "EWS_FandM",
+        candidate.AppNo,
         branch,
       ]);
       // console.log(`Seat offered to ${candidate.COAP} in EWS_FandM category`);
@@ -51,7 +53,7 @@ async function shortListEWSCandidates(con, limit, round, branch) {
       await insertManyIntoTable(
         con,
         "applicationstatus",
-        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,branch)",
+        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,AppNo,branch)",
         valuesToBeInserted
       );
     }
@@ -74,7 +76,8 @@ async function shortListEWSFemaleCandidates(con, limit, round, branch) {
   const queryString = `SELECT mtechappl.COAP, Gender, Category, MaxGateScore,
     Offered, 
     Accepted,
-    OfferedRound
+    OfferedRound,
+    mtechappl.AppNo
     FROM mtechappl
     LEFT JOIN applicationstatus
     ON mtechappl.COAP = applicationstatus.COAP 
@@ -103,6 +106,7 @@ async function shortListEWSFemaleCandidates(con, limit, round, branch) {
         "",
         "",
         "EWS_Female",
+        candidate.AppNo,
         branch,
       ]);
       // console.log(`Seat offered to ${candidate.COAP} in EWS_Female category`);
@@ -113,7 +117,7 @@ async function shortListEWSFemaleCandidates(con, limit, round, branch) {
       await insertManyIntoTable(
         con,
         "applicationstatus",
-        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,branch)",
+        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,AppNo,branch)",
         valuesToBeInserted
       );
     }

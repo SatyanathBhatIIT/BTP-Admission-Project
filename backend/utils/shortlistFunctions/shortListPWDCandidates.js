@@ -20,7 +20,8 @@ async function shortListPWDCandidates(
   queryString = `SELECT ${mtechapplTable}.COAP, Gender, Category, MaxGateScore,
     Offered, 
     Accepted,
-    OfferedRound
+    OfferedRound,
+    ${mtechapplTable}.AppNo
     FROM ${mtechapplTable}
     LEFT JOIN ${applicationstatusTable}
     ON ${mtechapplTable}.COAP = ${applicationstatusTable}.COAP 
@@ -49,6 +50,7 @@ async function shortListPWDCandidates(
         "",
         offerCat,
         "Y",
+        candidate.AppNo,
         branch,
       ]);
       // console.log(`Shortlisted ${candidate.COAP} in ${offerCat} category `);
@@ -58,7 +60,7 @@ async function shortListPWDCandidates(
       await insertManyIntoTable(
         con,
         "applicationstatus",
-        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,IsOfferPwd,branch)",
+        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,IsOfferPwd,AppNo,branch)",
         valuesToBeInserted
       );
     }
@@ -88,7 +90,8 @@ async function shortListEWSPWDCandidates(
   queryString = `SELECT ${mtechapplTable}.COAP, Gender, Category, MaxGateScore,
     Offered, 
     Accepted,
-    OfferedRound
+    OfferedRound,
+    ${mtechapplTable}.AppNo
     FROM ${mtechapplTable}
     LEFT JOIN ${applicationstatusTable}
     ON ${mtechapplTable}.COAP = ${applicationstatusTable}.COAP 
@@ -116,6 +119,7 @@ async function shortListEWSPWDCandidates(
         "",
         offerCat,
         "Y",
+        candidate.AppNo,
         branch,
       ]);
       // console.log(`Shortlisted ${candidate.COAP} in ${offerCat} category `);
@@ -125,7 +129,7 @@ async function shortListEWSPWDCandidates(
       await insertManyIntoTable(
         con,
         "applicationstatus",
-        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,IsOfferPwd,branch)",
+        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,IsOfferPwd,AppNo,branch)",
         valuesToBeInserted
       );
     }
@@ -149,7 +153,8 @@ async function shortListPWDFemaleCandidates(con, limit, round, branch) {
   queryString = `SELECT ${mtechapplTable}.COAP, Gender, Category, MaxGateScore,
     Offered, 
     Accepted,
-    OfferedRound
+    OfferedRound,
+    ${mtechapplTable}.AppNo
     FROM ${mtechapplTable}
     LEFT JOIN ${applicationstatusTable}
     ON ${mtechapplTable}.COAP = ${applicationstatusTable}.COAP 
@@ -177,6 +182,7 @@ async function shortListPWDFemaleCandidates(con, limit, round, branch) {
         "",
         "PWD_Female",
         "Y",
+        candidate.AppNo,
         branch,
       ]);
       // console.log(`Shortlisted ${candidate.COAP} in PWD_Female category `);
@@ -186,7 +192,7 @@ async function shortListPWDFemaleCandidates(con, limit, round, branch) {
       await insertManyIntoTable(
         con,
         "applicationstatus",
-        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,IsOfferPwd,branch)",
+        "(COAP,Offered,Accepted,OfferedRound,RetainRound,RejectOrAcceptRound,OfferCat,IsOfferPwd,AppNo,branch)",
         valuesToBeInserted
       );
     }
