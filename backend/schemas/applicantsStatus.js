@@ -1,6 +1,6 @@
 const applicantsStatusSchema = (branch) => `
     (
-        COAP VARCHAR(200) NOT NULL UNIQUE,
+        COAP VARCHAR(200) NOT NULL,
         Offered text,
         Accepted text,        
         OfferCat text,
