@@ -25,7 +25,7 @@ async function writeToExcel(
   try {
     var [result] = await con.query(`SELECT ${columnNames} FROM mtechappl 
         LEFT JOIN applicationstatus
-        ON mtechappl.COAP = applicationstatus.COAP 
+        ON mtechappl.AppNo = applicationstatus.AppNo
         WHERE mtechappl.Category='${category}' AND mtechappl.branch = '${branch}' ORDER BY mtechappl.MaxGateScore DESC`);
 
     // Uncompress OtherDetails for all rows
@@ -96,7 +96,7 @@ async function writeToExcel2024(con, sheetName, round, fileName, branch) {
 
     var [result] = await con.query(`SELECT ${columnNames} FROM mtechappl
         LEFT JOIN applicationstatus
-        ON mtechappl.COAP = applicationstatus.COAP 
+        ON mtechappl.AppNo = applicationstatus.AppNo
         WHERE (OfferedRound='${round}' OR Accepted='R' OR Accepted='Y') AND mtechappl.branch = '${branch}' ORDER BY applicationstatus.offerCat ASC,mtechappl.MaxGateScore DESC`);
     const file = reader.readFile(fileName);
     //console.log(result);
@@ -205,7 +205,7 @@ async function writeToExcelFemaleCandidates(
   try {
     var [result] = await con.query(`SELECT ${columnNames} FROM mtechappl 
         LEFT JOIN applicationstatus
-        ON mtechappl.COAP = applicationstatus.COAP 
+        ON mtechappl.AppNo = applicationstatus.AppNo
         WHERE mtechappl.Category='${category}' AND Gender = "Female" AND mtechappl.branch = '${branch}' ORDER BY mtechappl.MaxGateScore DESC`);
 
     // Uncompress OtherDetails for all rows
@@ -260,7 +260,7 @@ async function writeToExcelEWS(
   try {
     var [result] = await con.query(`SELECT ${columnNames} FROM mtechappl 
         LEFT JOIN applicationstatus
-        ON mtechappl.COAP = applicationstatus.COAP 
+        ON mtechappl.AppNo = applicationstatus.AppNo
         WHERE EWS='Yes' AND mtechappl.branch = '${branch}' ORDER BY mtechappl.MaxGateScore DESC`);
 
     // Uncompress OtherDetails for all rows
@@ -308,7 +308,7 @@ async function writeToExcelAllOffers(con, sheetName, round, fileName, branch) {
   try {
     var [result] = await con.query(`SELECT ${columnNames} FROM mtechappl
         LEFT JOIN applicationstatus
-        ON mtechappl.COAP = applicationstatus.COAP 
+        ON mtechappl.AppNo = applicationstatus.AppNo
         WHERE (OfferedRound='${round}' OR Accepted='R' OR Accepted='Y') AND mtechappl.branch = '${branch}' ORDER BY applicationstatus.offerCat ASC, mtechappl.MaxGateScore DESC`);
 
     // Uncompress OtherDetails for all rows
@@ -363,7 +363,7 @@ async function writeToExcelGeneral(
   try {
     var [result] = await con.query(`SELECT ${columnNames} FROM mtechappl 
         LEFT JOIN applicationstatus
-        ON mtechappl.COAP = applicationstatus.COAP 
+        ON mtechappl.AppNo = applicationstatus.AppNo
         WHERE mtechappl.branch = '${branch}' ORDER BY mtechappl.MaxGateScore DESC`);
 
     // Uncompress OtherDetails for all rows
@@ -419,7 +419,7 @@ async function writeToExcelGeneralFemale(
   try {
     var [result] = await con.query(`SELECT ${columnNames} FROM mtechappl 
         LEFT JOIN applicationstatus
-        ON mtechappl.COAP = applicationstatus.COAP 
+        ON mtechappl.AppNo = applicationstatus.AppNo
         WHERE Gender="Female" AND mtechappl.branch = '${branch}' ORDER BY mtechappl.MaxGateScore DESC`);
 
     // Uncompress OtherDetails for all rows
@@ -474,7 +474,7 @@ async function writeToExcelPWD(
   try {
     var [result] = await con.query(`SELECT ${columnNames} FROM mtechappl 
         LEFT JOIN applicationstatus
-        ON mtechappl.COAP = applicationstatus.COAP 
+        ON mtechappl.AppNo = applicationstatus.AppNo
         WHERE Pwd='Yes' AND category REGEXP '${category}' AND mtechappl.branch = '${branch}' ORDER BY mtechappl.MaxGateScore DESC`);
 
     // Uncompress OtherDetails for all rows
@@ -530,7 +530,7 @@ async function writeToExcelEWSPWD(
   try {
     var [result] = await con.query(`SELECT ${columnNames} FROM mtechappl 
         LEFT JOIN applicationstatus
-        ON mtechappl.COAP = applicationstatus.COAP 
+        ON mtechappl.AppNo = applicationstatus.AppNo
         WHERE Pwd='Yes' AND EWS='Yes' AND category REGEXP '${category}' AND mtechappl.branch = '${branch}' ORDER BY mtechappl.MaxGateScore DESC`);
 
     // Uncompress OtherDetails for all rows

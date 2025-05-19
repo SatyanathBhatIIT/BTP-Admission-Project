@@ -18,7 +18,7 @@ async function shortListGeneralCandidates(con, limit, round, branch) {
     ${mtechapplTable}.AppNo
     FROM ${mtechapplTable}
     LEFT JOIN ${applicationstatusTable}
-    ON ${mtechapplTable}.COAP = ${applicationstatusTable}.COAP 
+    ON ${mtechapplTable}.AppNo = ${applicationstatusTable}.AppNo
     WHERE (Offered IS NULL OR (Accepted='R' AND OfferCat != 'GEN_Female') OR (Accepted='Y' AND OfferCat != 'GEN_Female')) AND ${mtechapplTable}.branch = '${branch}'
     ORDER BY MaxGateScore DESC, EWS ASC, HSSCper DESC, SSCper DESC
     LIMIT ${limit}`;
@@ -98,7 +98,7 @@ async function shortListGeneralFemaleCandidates(con, limit, round, branch) {
     ${mtechapplTable}.AppNo
     FROM ${mtechapplTable}
     LEFT JOIN ${applicationstatusTable}
-    ON ${mtechapplTable}.COAP = ${applicationstatusTable}.COAP 
+    ON ${mtechapplTable}.AppNo = ${applicationstatusTable}.AppNo
     WHERE (Offered IS NULL OR Accepted='R' OR Accepted='Y') AND Gender = "Female" AND ${mtechapplTable}.branch = '${branch}'
     ORDER BY MaxGateScore DESC, EWS ASC, HSSCper DESC, SSCper DESC
     LIMIT ${limit}`;

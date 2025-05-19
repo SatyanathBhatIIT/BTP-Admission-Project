@@ -54,7 +54,7 @@ async function shortlistCommonPWDCandidates(con, limit, round, branch) {
         mtechappl.AppNo
         FROM mtechappl
         LEFT JOIN applicationstatus
-        ON mtechappl.COAP = applicationstatus.COAP 
+        ON mtechappl.AppNo = applicationstatus.AppNo
         WHERE Offered IS NULL AND Pwd='Yes' AND mtechappl.COAP NOT IN (${checkedCOAPIDs})
         AND mtechappl.branch = '${branch}'  /* Added condition for branch */
         ORDER BY MaxGateScore DESC, HSSCper DESC, SSCper DESC

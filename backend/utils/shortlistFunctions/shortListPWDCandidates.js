@@ -24,7 +24,7 @@ async function shortListPWDCandidates(
     ${mtechapplTable}.AppNo
     FROM ${mtechapplTable}
     LEFT JOIN ${applicationstatusTable}
-    ON ${mtechapplTable}.COAP = ${applicationstatusTable}.COAP 
+    ON ${mtechapplTable}.AppNo = ${applicationstatusTable}.AppNo
     WHERE Offered IS NULL AND Pwd='Yes' AND category REGEXP '${category}' AND ${mtechapplTable}.branch = '${branch}'
     ORDER BY MaxGateScore DESC, HSSCper DESC, SSCper DESC
     LIMIT ${limit}`;
@@ -94,7 +94,7 @@ async function shortListEWSPWDCandidates(
     ${mtechapplTable}.AppNo
     FROM ${mtechapplTable}
     LEFT JOIN ${applicationstatusTable}
-    ON ${mtechapplTable}.COAP = ${applicationstatusTable}.COAP 
+    ON ${mtechapplTable}.AppNo = ${applicationstatusTable}.AppNo
     WHERE Offered IS NULL AND Pwd='Yes' AND EWS='Yes' AND category='GEN' AND ${mtechapplTable}.branch = '${branch}'
     ORDER BY MaxGateScore DESC, HSSCper DESC, SSCper DESC
     LIMIT ${limit}`;
@@ -157,7 +157,7 @@ async function shortListPWDFemaleCandidates(con, limit, round, branch) {
     ${mtechapplTable}.AppNo
     FROM ${mtechapplTable}
     LEFT JOIN ${applicationstatusTable}
-    ON ${mtechapplTable}.COAP = ${applicationstatusTable}.COAP 
+    ON ${mtechapplTable}.AppNo = ${applicationstatusTable}.AppNo
     WHERE Offered IS NULL AND Gender = "Female" AND Pwd='Yes' AND ${mtechapplTable}.branch = '${branch}'
     ORDER BY MaxGateScore DESC, HSSCper DESC, SSCper DESC
     LIMIT ${limit}`;

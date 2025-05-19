@@ -24,7 +24,7 @@ async function updateFemaleCandidatesOfferedCategory(
     OfferedRound
     FROM mtechappl
     LEFT JOIN applicationstatus
-    ON mtechappl.COAP = applicationstatus.COAP 
+    ON mtechappl.AppNo = applicationstatus.AppNo
     WHERE (Accepted='R' AND OfferCat ='${category}_FandM' AND Gender='Female') OR (Accepted='Y' AND  OfferCat ='${category}_FandM' AND Gender='Female') 
     AND mtechappl.branch = '${branch}'
     ORDER BY MaxGateScore DESC, EWS ASC, HSSCper DESC, SSCper DESC`;

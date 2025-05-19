@@ -28,7 +28,7 @@ async function shortListReservedCandidates(
             ${mtechapplTable}.AppNo
             FROM ${mtechapplTable}
             LEFT JOIN ${applicationstatusTable}
-            ON ${mtechapplTable}.COAP = ${applicationstatusTable}.COAP 
+            ON ${mtechapplTable}.AppNo = ${applicationstatusTable}.AppNo
             WHERE Offered IS NULL AND Gender = "Female" AND Category="${category}" AND ${mtechapplTable}.branch = '${branch}'
             ORDER BY MaxGateScore DESC, HSSCper DESC, SSCper DESC
             LIMIT ${limit}`
@@ -41,7 +41,7 @@ async function shortListReservedCandidates(
             ${mtechapplTable}.AppNo
             FROM ${mtechapplTable}
             LEFT JOIN ${applicationstatusTable}
-            ON ${mtechapplTable}.COAP = ${applicationstatusTable}.COAP 
+            ON ${mtechapplTable}.AppNo  = ${applicationstatusTable}.AppNo
             WHERE Offered IS NULL AND Category="${category}" AND ${mtechapplTable}.branch = '${branch}'
             ORDER BY MaxGateScore DESC, HSSCper DESC, SSCper DESC
             LIMIT ${limit}`

@@ -16,7 +16,7 @@ async function shortListEWSCandidates(con, limit, round, branch) {
     mtechappl.AppNo
     FROM mtechappl
     LEFT JOIN applicationstatus
-    ON mtechappl.COAP = applicationstatus.COAP 
+    ON mtechappl.AppNo = applicationstatus.AppNo
     WHERE Offered IS NULL AND EWS='Yes' AND category='GEN' AND mtechappl.branch = '${branch}'
     ORDER BY MaxGateScore DESC, HSSCper DESC, SSCper DESC
     LIMIT ${limit}`;
@@ -80,7 +80,7 @@ async function shortListEWSFemaleCandidates(con, limit, round, branch) {
     mtechappl.AppNo
     FROM mtechappl
     LEFT JOIN applicationstatus
-    ON mtechappl.COAP = applicationstatus.COAP 
+    ON mtechappl.AppNo = applicationstatus.AppNo
     WHERE Offered IS NULL AND Gender = "Female" AND EWS='Yes' AND category="GEN" AND mtechappl.branch = '${branch}'
     ORDER BY MaxGateScore DESC, HSSCper DESC, SSCper DESC
     LIMIT ${limit}`;
