@@ -297,7 +297,7 @@ router.post(
         //saving the file based on the input file name and calling updates status function
         try {
           if (fileName === "IITGCandidateDecision") {
-            updateStatusIITGList(
+            await updateStatusIITGList(
               process.env.MYSQL_DATABASE,
               newpath,
               roundNumber,
@@ -306,7 +306,7 @@ router.post(
               req.user.branch
             );
           } else if (fileName === "IITGOfferedButNotInterested") {
-            updateStatusIITGNotInterested(
+            await updateStatusIITGNotInterested(
               process.env.MYSQL_DATABASE,
               newpath,
               roundNumber,
@@ -315,7 +315,7 @@ router.post(
               req.user.branch
             );
           } else if (fileName === "ConsolidatedFile") {
-            updateStatusConsolidatedFile(
+            await updateStatusConsolidatedFile(
               process.env.MYSQL_DATABASE,
               newpath,
               roundNumber,
